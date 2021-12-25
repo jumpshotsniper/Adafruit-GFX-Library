@@ -130,7 +130,28 @@ void Adafruit_GFX::writeLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 void Adafruit_GFX::startWrite(){
     // Overwrite in subclasses if desired!
 }
-
+void Adafruit_GFX::drawPentagram(int16_t x0, int16_t y0, int16_t r,
+                                 uint16_t color)
+{
+    int16_t x[5];
+    int16_t y[5];
+    x[0] = x0;
+    x[1] = x0 - r * cos(PI / 10);
+    x[2] = x0 - r * sin(PI / 5);
+    x[3] = x0 + r * sin(PI / 5);
+    x[4] = x0 + r * cos(PI / 10);
+    y[0] = y0 + r;
+    y[1] = y0 + r * sin(PI / 10);
+    y[2] = y0 - r * cos(PI / 5);
+    y[3] = y0 - r * cos(PI / 5);
+    y[4] = y0 + r * sin(PI / 10);
+    startWrite();
+    for (int i = 0; i < 5; i++)
+    {
+        drawLine(x[i], y[i], x[(i + 2) % 5], y[(i + 2) % 5], color);
+    }
+    endWrite();
+}
 void Adafruit_GFX::writePixel(int16_t x, int16_t y, uint16_t color){
     // Overwrite in subclasses if startWrite is defined!
     drawPixel(x, y, color);
@@ -154,29 +175,6 @@ void Adafruit_GFX::writeFastHLine(int16_t x, int16_t y,
     // Example: writeLine(x, y, x+w-1, y, color);
     // or writeFillRect(x, y, w, 1, color);
     drawFastHLine(x, y, w, color);
-}
-void Adafruit_GFX::drawPentagram(int16_t x0, int16_t y0,
-        int16_t r0, uint16_t color) {
-	int xa, ya;
-    int xb, yb;
-    int xc, yc;
-    int xd, yd;
-    int xe, ye;
-    xa = x0;
-    ya = y0 - r0;
-    xb = x0 - r0 * sin(PI / 180 * 72);
-    yb = y0 + r0 * -(cos(PI / 180 * 72));
-    xc = x0 - r0 * -(sin(PI / 180 * 36));
-    yc = y0 - r0 * -(cos(PI / 180 * 36));
-    xd = x0 + r0 * -(sin(PI / 180 * 36));
-    yd = y0 - r0 * -(cos(PI / 180 * 36));
-    xe = x0 + r0 * sin(PI / 180 * 72);
-    ye = y0 + r0 * -(cos(PI / 180 * 72));
-    drawLine(xa, ya, xc, yc, color);
-    drawLine(xa, ya, xd, yd, color);
-    drawLine(xb, yb, xc, yc, color);
-	drawLine(xb, yb, xe, ye, color);
-	drawLine(xd, yd, xe, ye, color);
 }
 
 void Adafruit_GFX::writeFillRect(int16_t x, int16_t y, int16_t w, int16_t h,
