@@ -42,6 +42,7 @@ class Adafruit_GFX : public Print {
   virtual void
     // It's good to implement those, even if using transaction API
     drawPentagram(int16_t x0, int16_t y0, int16_t r, uint16_t color),
+    drawEllipse(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t a, uint16_t color),
     drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color),
     drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color),
     fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color),
